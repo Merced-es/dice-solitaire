@@ -80,13 +80,18 @@ public class MainActivity extends AppCompatActivity {
     for (int i = 0; i < Roll.NUM_FACES; i++) {
       String idString = String.format(DICE_FACE_ID_FORMAT, i + 1);
       int id = res.getIdentifier(idString, "drawable", getPackageName());
-      Drawable face = getDrawable(id);
-      diceFaces[i] = face;
+      diceFaces[i] = getDrawable(id);
     }
     roller.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
         Roll roll = new Roll(rng);
+        for (int i = 0; i < Roll.NUM_DICE; i++) {
+          ImageView view = diceImages[i];
+          int value = roll.getDice()[i];
+          Drawable face = diceFaces[value - 1];
+          view.setImageDrawable(face);
+        }
         // TODO Display dice images.
       }
     });
